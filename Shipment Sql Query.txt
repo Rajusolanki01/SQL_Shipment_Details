@@ -1,0 +1,28 @@
+// Find details of Shipper(s) who has got Orders?
+
+// Solution Query
+
+SELECT Shippers.*, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM Shippers
+INNER JOIN Orders ON Shippers.ShipperID = Orders.ShipperID
+GROUP BY Shippers.ShipperID, Shippers.ShipperName, Shippers.Phone
+
+
+// Find details of Shipper(s) for whom there is no Order?
+
+// Solution Query
+
+SELECT Shippers.*
+FROM Shippers
+LEFT JOIN Orders ON Shippers.ShipperID = Orders.ShipperID
+WHERE Orders.ShipperID IS NULL;
+
+
+// Find details of Customer(s) whose orders can’t be shipped due to missing shipper details?
+// Solution Query
+
+SELECT Customers.*
+FROM Customers
+INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+WHERE Shippers.ShipperID IS NULL;
